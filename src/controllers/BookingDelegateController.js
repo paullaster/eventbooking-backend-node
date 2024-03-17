@@ -1,16 +1,10 @@
-import { Booking } from "../db/BookingModel.js";
-import { Event } from "../db/EventsModel.js";
+import { Booking } from "../db/BookingModel";
+import { Event } from "../db/EventsModel";
 
-class BookingController {
-    async createBooking (req, res) {
+class BookingDelegateController {
+    async createBookingDelegate (req, res) {
         try {
-            const event = await Event.findOne({
-                where: {
-                    id: req.body.event
-                }
-            });
-            req.body.amount = event.cost;
-            req.body.balance = event.cost;
+            req.body.amount = course.price;
             return res.ApiResponse.success(await Booking.create(req.body), 201);
         } catch (error) {
             return res.ApiResponse.error(error);
@@ -60,4 +54,4 @@ class BookingController {
     }
 }
 
-export default new BookingController();
+export default new BookingDelegateController();
