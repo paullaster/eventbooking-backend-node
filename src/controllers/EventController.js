@@ -25,7 +25,8 @@ class EventController {
     async createEvent( req, res) {
         try {
             const { image, ...eventData } = req.body;
-            let url = `${app.url}/storage/public/images/${req.body.id}.png`;
+            const event = await Event.create(eventData)
+            let url = `${app.url}/storage/public/images/${event.id}.png`;
             const ImageBuffer = Buffer.from(image, 'base64');
             Jimp.read(ImageBuffer)
                 .then((result) => {
@@ -44,7 +45,7 @@ class EventController {
                 documentType: 'Event',
             };
             await Image.create(imageEntry);
-            return res.ApiResponse.success(await Event.create(eventData), 201);
+            return res.ApiResponse.success(event, 201);
         } catch (error) {
             return res.ApiResponse.error(error);
         }

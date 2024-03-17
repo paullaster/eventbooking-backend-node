@@ -23,6 +23,6 @@ const Image = sequilize.define('Image', {
     }
 });
 
-Image.sync();
+Image.sync({force: true});
 
 export { Image };

@@ -16,7 +16,7 @@ const Event = sequilize.define('Event', {
         allowNull: false,
     },
     cost: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     venue: {
@@ -24,11 +24,11 @@ const Event = sequilize.define('Event', {
         allowNull: false,
     },
     startDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     endDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     }
 });
