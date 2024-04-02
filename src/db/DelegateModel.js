@@ -27,6 +27,10 @@ const Delegate = sequilize.define('Delegate', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
 });
 
 Delegate.sync();

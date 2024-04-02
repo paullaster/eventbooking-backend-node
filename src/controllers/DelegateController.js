@@ -1,4 +1,4 @@
-import { Delegate } from "../db/DelegateModel";
+import { Delegate } from "../db/DelegateModel.js";
 
 class DelegateController {
     async create(req, res) {
