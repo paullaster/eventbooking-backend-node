@@ -15,7 +15,7 @@ class EventController {
         try {
             return res.ApiResponse.success(await Event.findOne({
                 where: {
-                    ...req.query,
+                    ...req.params,
                 }
             }));
         } catch (error) {
@@ -27,18 +27,19 @@ class EventController {
             const { image, ...eventData } = req.body;
             const event = await Event.create(eventData)
             let url = `${app.url}/storage/public/images/${event.id}.png`;
+            console.log(url);
             const ImageBuffer = Buffer.from(image, 'base64');
             Jimp.read(ImageBuffer)
                 .then((result) => {
                     result.resize(180, 180)
                         .quality(50)
-                        .write(`./storage/public/images/${req.body.id}.png`);
+                        .write(`./storage/public/images/${event.id}.png`);
 
                 })
                 .catch((error) => {
                     res.ApiResponse.error(error);
                 });
-            const sourceID = new Buffer.from(req.body.id).toString('base64');
+            const sourceID = new Buffer.from(event.id.toString()).toString('base64');
             const imageEntry = {
                 url,
                 sourceID,
