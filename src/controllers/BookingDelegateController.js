@@ -4,7 +4,12 @@ import { Event } from "../db/EventsModel";
 class BookingDelegateController {
     async createBookingDelegate (req, res) {
         try {
-            req.body.amount = course.price;
+            const event = await Event.findOne({
+                where: {
+                    id: req.body.event
+                }
+            });
+            req.body.amount = event.cost;
             return res.ApiResponse.success(await Booking.create(req.body), 201);
         } catch (error) {
             return res.ApiResponse.error(error);
@@ -21,7 +26,7 @@ class BookingDelegateController {
         try {
             return res.ApiResponse.success(await Booking.findOne({
                 where: {
-                   ...req.query,
+                   ...req.params,
                 }
             }));
         } catch (error) {
@@ -32,7 +37,7 @@ class BookingDelegateController {
         try {
             const booking = await Booking.findOne({
                 where: {
-                 ...req.query,
+                 ...req.params,
                 }
             });
             return res.ApiResponse.success(await booking.save(req.body));
@@ -44,7 +49,7 @@ class BookingDelegateController {
         try {
             const booking = await Booking.findOne({
                 where: {
-                ...req.query,
+                ...req.params,
                 }
             });
             return res.ApiResponse.success(await booking.destroy(), 202);
