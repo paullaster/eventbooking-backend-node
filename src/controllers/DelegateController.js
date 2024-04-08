@@ -15,6 +15,19 @@ class DelegateController {
             return res.ApiResponse.error(error);
         }
     }
+
+    async getEventDelegates(req, res) {
+        console.log(req.body)
+        try {
+            return res.ApiResponse.success(await Delegate.findAll({
+                where: {
+                    eventID: req.body.eventID
+                }
+            }));
+        } catch (error) {
+            return res.ApiResponse.error(error);
+        }
+    }
     async show(req, res) {
         try {
             return res.ApiResponse.success(await Delegate.findOne({
@@ -30,7 +43,7 @@ class DelegateController {
         try {
             const delegate = await Delegate.findOne({
                 where: {
-                   ...req.params
+                    ...req.params
                 }
             });
             return res.ApiResponse.success(await delegate.save(req.body));
@@ -42,7 +55,7 @@ class DelegateController {
         try {
             const delegate = await Delegate.findOne({
                 where: {
-                   ...req.params
+                    ...req.params
                 }
             });
             return res.ApiResponse.success(await delegate.destroy(), 202);

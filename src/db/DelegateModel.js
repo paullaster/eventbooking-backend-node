@@ -1,5 +1,5 @@
 import { sequilize } from "./dbConnection.js";
-import { DataTypes } from'sequelize'
+import { DataTypes } from 'sequelize'
 
 const Delegate = sequilize.define('Delegate', {
     id: {
@@ -16,19 +16,19 @@ const Delegate = sequilize.define('Delegate', {
         allowNull: false,
     },
     email: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     gender: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    bookingDate: {
+    address: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    address: {
-        type: DataTypes.STRING,
+    eventID: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     }
 });

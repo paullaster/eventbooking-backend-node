@@ -34,7 +34,6 @@ class EventController {
                     result.resize(180, 180)
                         .quality(50)
                         .write(`./storage/public/images/${event.id}.png`);
-
                 })
                 .catch((error) => {
                     res.ApiResponse.error(error);

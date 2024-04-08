@@ -21,6 +21,7 @@ router.delete('/bookings/:id', BookingController.deleteBooking);
 router.get('/delegates', DelegateController.index);
 router.get('/delegates/:id', DelegateController.show);
 router.post('/delegates', DelegateController.create);
+router.post('/event/delegates', DelegateController.getEventDelegates);
 router.put('/delegates/:id', DelegateController.update);
 router.delete('/delegates/:id', DelegateController.destroy);
 
