@@ -27,6 +27,10 @@ const Delegate = sequilize.define('Delegate', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    bookingDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
     eventID: {
         type: DataTypes.INTEGER,
         allowNull: false,

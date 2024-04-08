@@ -24,11 +24,11 @@ const Event = sequilize.define('Event', {
         allowNull: false,
     },
     startDate: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
     },
     endDate: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
     }
 });
