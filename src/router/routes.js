@@ -4,14 +4,15 @@ import BookingController from "../controllers/BookingController.js";
 import PaymentController from "../controllers/PaymentController.js";
 import DelegateController from "../controllers/DelegateController.js";
 import UserController from "../controllers/UserController.js";
+import VerifySessionTokenController from "../middlewares/VerifySessionToken.js";
 
 const router = express.Router();
 
 router.get('/events', EventController.events);
 router.get('/events/:id', EventController.event);
-router.post('/events', EventController.createEvent);
-router.put('/events/:id', EventController.updateEvent);
-router.delete('/events/:id', EventController.deleteEvent);
+router.post('/events', VerifySessionTokenController.verify,  EventController.createEvent);
+router.put('/events/:id', VerifySessionTokenController.verify,  EventController.updateEvent);
+router.delete('/events/:id', VerifySessionTokenController.verify, EventController.deleteEvent);
 
 router.get('/bookings', BookingController.bookings);
 router.get('/bookings/:id', BookingController.booking);

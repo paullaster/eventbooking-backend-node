@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import app from "../config/app.js";
 import { User } from "../db/UserModel.js";
 
-class VerifySessionToken {
+class VerifySessionTokenController {
     async verify(req, res, next) {
         try {
             const token = req.headers.authorization.split(" ")[1];
@@ -23,4 +23,4 @@ class VerifySessionToken {
     }
 };
 
-export default VerifySessionToken();
+export default  new VerifySessionTokenController();
