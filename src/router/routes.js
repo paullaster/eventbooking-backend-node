@@ -26,8 +26,8 @@ router.post('/event/delegates', DelegateController.getEventDelegates);
 router.put('/delegates/:id', DelegateController.update);
 router.delete('/delegates/:id', DelegateController.destroy);
 
-router.post('/user', UserController.createUser);
-router.get('/user/:id', UserController.show);
+router.post('/user/create', UserController.createUser);
+router.post('/user/login', UserController.login);
 
 router.post('/pay', PaymentController.niPushInit);
 router.post('/pay/callback', PaymentController.mpesaNIPushCallback);

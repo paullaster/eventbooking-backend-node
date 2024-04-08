@@ -36,15 +36,28 @@ class UserController {
             return res.ApiResponse.error(error);
         }
     }
-    async show(req, res) {
+    async login(req, res) {
         try {
             const admin = await User.findOne({
                 where: {
-                    id: req.params.id
+                    username: req.body.username,
                 }
             });
+            if (admin) {
+                const isMatch = await bcrypt.compare(req.body.password, admin.password);
+                if (isMatch) {
+                    const { password, ...args} = admin.dataValues;
+                    jwt.sign(args, app.key, {expiresIn: '1h', algorithm: 'HS512'}, (error, data) => {
+                        if (error) {
+                            return res.ApiResponse.error(error);
+                        }
+                        return res.ApiResponse.success(data);
+                    });
+                } else {
+                    return res.ApiResponse.error(admin.username, `Incorrect password!`, 400);
+                }
+            }
             
-            return res.ApiResponse.success();
         } catch (error) {
             return res.ApiResponse.error(error);
         }
