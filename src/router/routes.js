@@ -3,6 +3,7 @@ import EventController from "../controllers/EventController.js";
 import BookingController from "../controllers/BookingController.js";
 import PaymentController from "../controllers/PaymentController.js";
 import DelegateController from "../controllers/DelegateController.js";
+import UserController from "../controllers/UserController.js";
 
 const router = express.Router();
 
@@ -24,6 +25,9 @@ router.post('/delegates', DelegateController.create);
 router.post('/event/delegates', DelegateController.getEventDelegates);
 router.put('/delegates/:id', DelegateController.update);
 router.delete('/delegates/:id', DelegateController.destroy);
+
+router.post('/user', UserController.createUser);
+router.get('/user/:id', UserController.show);
 
 router.post('/pay', PaymentController.niPushInit);
 router.post('/pay/callback', PaymentController.mpesaNIPushCallback);
