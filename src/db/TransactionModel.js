@@ -55,6 +55,6 @@ const Transaction = sequilize.define('Transaction', {
     }
 });
 
-Transaction.sync();
+Transaction.sync({});
 
 export { Transaction };

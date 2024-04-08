@@ -45,6 +45,6 @@ const Booking = sequilize.define('Booking', {
     },
 });
 
-Booking.sync();
+Booking.sync({});
 
 export { Booking };

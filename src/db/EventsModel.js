@@ -33,6 +33,6 @@ const Event = sequilize.define('Event', {
     }
 });
 
-Event.sync();
+Event.sync({});
 
 export { Event };

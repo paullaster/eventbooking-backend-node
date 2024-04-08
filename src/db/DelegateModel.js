@@ -37,6 +37,6 @@ const Delegate = sequilize.define('Delegate', {
     }
 });
 
-Delegate.sync();
+Delegate.sync({});
 
 export { Delegate };
