@@ -11,6 +11,8 @@ class BookingController {
             });
             req.body.amount = event.cost;
             req.body.balance = event.cost;
+            req.body.status = "New";
+            req.body.payment = "Pending";
             return res.ApiResponse.success(await Booking.create(req.body), 201);
         } catch (error) {
             return res.ApiResponse.error(error);

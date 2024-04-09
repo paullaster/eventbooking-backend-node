@@ -30,9 +30,9 @@ class DelegateController {
     }
     async show(req, res) {
         try {
-            return res.ApiResponse.success(await Delegate.findOne({
+            return res.ApiResponse.success(await Delegate.findAll({
                 where: {
-                    ...req.params
+                    booking: req.params.id
                 }
             }));
         } catch (error) {

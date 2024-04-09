@@ -8,10 +8,6 @@ const Booking = sequilize.define('Booking', {
         primaryKey: true,
         autoIncrement: true
     },
-    delegate: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     event: {
         type: DataTypes.INTEGER,
         references: {
@@ -31,11 +27,6 @@ const Booking = sequilize.define('Booking', {
     status: {
         type: DataTypes.STRING,
         values: ['New', 'Booked'],
-        allowNull: false,
-    },
-    gender: {
-        type: DataTypes.STRING,
-        values: ['Male', 'Female', 'Prefer not to say'],
         allowNull: false,
     },
     payment: {
