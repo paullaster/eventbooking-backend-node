@@ -1,6 +1,7 @@
 import { Booking } from '../db/BookingModel.js';
 import { Transaction } from '../db/TransactionModel.js';
 import { Mpesa } from '../lib/Mpesa.js';
+import mpesaConfig from '../config/mpesa.js';
 
 
 class PaymentsController {
@@ -17,27 +18,27 @@ class PaymentsController {
             }
             // Destructure the request body
             const { bookingNo, ...transaction } = req.body;
+            transaction.TransactionType = mpesaConfig.transactiontype;
 
-            // Find the application based on the application code
+            // Find the application based on the booking number
             const booking = await Booking.findOne({ where: { id: bookingNo } });
 
-            // Check if the application exists
+            // Check if the booking exists
             if (!booking) {
                 res.ApiResponse.error(booking, 'We cannot find this application', 404);
             }
 
-            // Check if the application balance is less than 1
+            // Check if the booking balance is less than 1
             if (booking.balance < 1) {
                 res.ApiResponse.error(application, 'This application has been fully paid', 400);
             }
 
             // If the transaction amount is less than 1, return an error response with a status code of 400 (Bad Request)
-            if (transaction.Amount < 1) {
+            if (transaction.amount < 1) {
                 res.ApiResponse.error(transaction, 'Invalid amount', 400);
             }
             // Create a new M-Pesa instance
             const mpesa = new Mpesa();
-            // console.log(mpesa.niPush(transaction, applicationCode))
             //Initiate the NIPUSH transaction
             mpesa.niPush(transaction, bookingNo)
                 .then((pay) => {

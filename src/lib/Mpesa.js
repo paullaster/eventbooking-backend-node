@@ -4,9 +4,9 @@ import axios from 'axios';
 class Mpesa {
     /**
  * Get M-Pesa Token
- * @returns {string} access_token
+ * @returns {string} Promise access_token
  */
-    getMpesaToken = async () => {
+    getMpesaToken = async() => {
         try {
             const joinedKeys = `${mpesa.consumer_key}:${mpesa.consumer_secret}`;
         
@@ -21,29 +21,30 @@ class Mpesa {
                      },
             };
             const response = await axios.request(configs);
-            return response.data.access_token;
+            console.log("Token response:  " + response.data.access_token);
+            return Promise.resolve(response.data.access_token);
         } catch (error) {
-            throw new Error(error);
+            return Promise.reject(error);
         }
     }
     /**
  * Submits a transaction to the M-Pesa Express API
  * @param {object} transaction the transaction details
  * @param {string} transaction.phoneNumber the phone number of the recipient
- * @param {number} transaction.Amount the amount to be transacted
+ * @param {number} transaction.amount the amount to be transacted
  * @param {string} transaction.TransactionType the type of transaction
  * @param {string} [transaction.TransactionDesc] a description of the transaction
  * @returns {object} the M-Pesa Express API response
  */
     niPush = async (transaction, bookingNo = 0) =>{
         try {
-            const token =  await this.getMpesaToken();
+            const token = await this.getMpesaToken()
             const body = {
                 BusinessShortCode: mpesa.business_shortcode,
                 Password: await this.password(),
                 Timestamp: await this.timeStamp(),
                 TransactionType: transaction.TransactionType,
-                Amount: `${transaction.Amount}`,
+                Amount: `${transaction.amount}`,
                 PartyA: await this.formatPhoneNumber(transaction.phoneNumber),
                 PartyB: mpesa.business_shortcode,
                 PhoneNumber: await this.formatPhoneNumber(transaction.phoneNumber),
@@ -61,20 +62,19 @@ class Mpesa {
                 data: body,
                 method: 'POST'
             });
-            if (response.data.ResponseCode < 1 && applicationCode) {
+            if (response.data.ResponseCode < 1 && bookingNo) {
                 await Transaction.create({
                     id: body.AccountReference ? body.AccountReference : this.generateAccountNumber(),
                     phoneNumber: transaction.phoneNumber,
-                    amount: transaction.Amount,
+                    amount: transaction.amount,
                     status: 'Pending',
                     checkoutRequestID: response.data.CheckoutRequestID,
                     merchantRequestID: response.data.MerchantRequestID,
                     transactionMessage: response.data.ResponseDescription,
-                    applicationCode: bookingNo,
+                    bookingNo: bookingNo,
                 });
                 return response.data;
             }
-            console.log("error response", response.data)
             throw new Error(JSON.stringify(response.data));
         } catch (error) {
             console.log("Logged error in catch", error);

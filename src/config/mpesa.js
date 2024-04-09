@@ -8,4 +8,5 @@ export default {
     business_shortcode: process.env.MPESA_BUSSINESS_SHORTCODE,
     mpesa_passkey: process.env.MPESA_PASSKEY,
     mpesa_callback: `${app.url}/pay/callback`,
+    transactiontype: process.env.MPESA_TRANSACTIONTYPE
 }

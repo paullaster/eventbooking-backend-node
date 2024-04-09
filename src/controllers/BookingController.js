@@ -29,7 +29,7 @@ class BookingController {
         try {
             return res.ApiResponse.success(await Booking.findOne({
                 where: {
-                   ...req.query,
+                   ...req.params,
                 }
             }));
         } catch (error) {
