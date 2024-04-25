@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get('/events', EventController.events);
 router.get('/events/:id', EventController.event);
-router.post('/events', VerifySessionTokenController.verify,  EventController.createEvent);
-router.put('/events/:id', VerifySessionTokenController.verify,  EventController.updateEvent);
+router.post('/events', VerifySessionTokenController.verify, EventController.createEvent);
+router.put('/events/:id', VerifySessionTokenController.verify, EventController.updateEvent);
 router.delete('/events/:id', VerifySessionTokenController.verify, EventController.deleteEvent);
 
 router.get('/bookings', BookingController.bookings);
@@ -19,6 +19,8 @@ router.get('/bookings/:id', BookingController.booking);
 router.post('/bookings', BookingController.createBooking);
 router.put('/bookings/:id', BookingController.updateBooking);
 router.delete('/bookings/:id', BookingController.deleteBooking);
+router.post('/feedback', BookingController.feedback);
+router.get('/list/feedback', BookingController.listFeedback);
 
 router.get('/delegates', DelegateController.index);
 router.get('/delegates/:id', DelegateController.show);

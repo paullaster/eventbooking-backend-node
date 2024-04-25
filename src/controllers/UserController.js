@@ -18,8 +18,8 @@ class UserController {
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             req.body.password = hashedPassword;
             const user = await User.create(req.body);
-            const { password, ...args} = user.dataValues;
-            jwt.sign(args, app.key, {expiresIn: '1h', algorithm: 'HS512'}, (error, data) => {
+            const { password, ...args } = user.dataValues;
+            jwt.sign(args, app.key, { expiresIn: '1h', algorithm: 'HS512' }, (error, data) => {
                 if (error) {
                     return res.ApiResponse.error(error);
                 }
@@ -40,24 +40,24 @@ class UserController {
         try {
             const admin = await User.findOne({
                 where: {
-                    username: req.body.username,
+                    username: req.body.email,
                 }
             });
             if (admin) {
                 const isMatch = await bcrypt.compare(req.body.password, admin.password);
                 if (isMatch) {
-                    const { password, ...args} = admin.dataValues;
-                    jwt.sign(args, app.key, {expiresIn: '1h', algorithm: 'HS512'}, (error, data) => {
+                    const { password, ...args } = admin.dataValues;
+                    jwt.sign(args, app.key, { expiresIn: '1h', algorithm: 'HS512' }, (error, data) => {
                         if (error) {
                             return res.ApiResponse.error(error);
                         }
-                        return res.ApiResponse.success(data);
+                        return res.ApiResponse.success({ token: data, user: admin.name });
                     });
                 } else {
                     return res.ApiResponse.error(admin.username, `Incorrect password!`, 400);
                 }
             }
-            
+
         } catch (error) {
             return res.ApiResponse.error(error);
         }
